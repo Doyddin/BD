@@ -1,0 +1,174 @@
+-- Dias e Dias Parados Informática Ltda. 
+
+-- avivah
+drop database if exists avivah;
+create database avivah;
+
+-- Funcionarios nome,sexo,datanasc,endereco,contato,rg,cepeéfi
+drop table if exists funcionarios
+create table funcionarios(
+idFunc int not null auto_increment primary key,
+idchefe int not null,
+cpfFunc int(10) not null,
+rgFunc int(9) not null,
+nomeFunc varchar(60) not null,
+sexoFunc enum("M","F") not null,
+idcontato int not null,
+datanascFunc date not null,
+idenderecoFunc int not null,
+foreign key(idendereco) references enderecos(idendereco),
+foreign key(idcontato) references contatos(idcontato));
+
+-- contatos Funcosieoaufha
+drop table if exists contatos;
+create table contatos(
+idcontato int not null auto_increment primary key,
+idFunc int not null,
+idforn int not null,
+celular int(9) not null,
+telefone int(8),
+telefoneempresa int(8),
+emailpessoal varchar(100) not null,
+emailInst varchar(100) not null,
+foreign key(idFunc) references funcionarios(idFunc),
+foreign key(idforn) references fornecedores(idforn));
+
+-- fornecedores
+drop table if exists fornecedores;
+create table if not exists fornecedores;
+idempresa int not null primary key,
+empresaFor varchar(35) not null,
+idfor int not null auto_increment primary key,
+idcontato int not null,foreign key(idcontato) references contatos(idcontato),
+numctps int(7) not null,
+cnpjFor int(14) not null,
+cpfFor int(9) not null,
+nomeFor varchar(60) not null,
+sexoFor enum("M","F") not null);
+
+-- produtos
+drop table if exists produtos;
+create table if not exists produtos
+(idproduto int not null primary key auto_increment,
+empresafor,foreign key(empresafor) references fornecedores(empresaFor),
+nomeproduto varchar(20) not null,
+corproduto, varchar(20) not null,
+fabricante, varchar (50) not null,
+peso, smallint not null,
+tamanhoa int not null,
+tamanhol int not null,
+material varchar(120),
+codbarra longint(12),
+preco decimal(5,2) not null,
+composicao varchar(130));
+
+-- enderecos
+ create table Enderecos(
+idendereco int not null primary key auto_increment,
+idfunc int not null,
+idfor int not null,
+EnderecoFixoFunc varchar(150) not null,
+CEP char(8) not null,
+Complementos varchar(160),
+foregn key(idfunc) references funcionarios(idfunc),
+foregn key(idfor) references fornecedores(idfor));
+
+-- setores
+drop table if exists setores;
+create table setores(
+idsetor int not null auto_increment primary key,
+nomesetor varchar(30) not null,
+idfilial int not null,
+idchefe int not null,
+foreign key(idchefe) references funcionarios(idchefe));
+
+insert into table setores(nomesetor,idfilial,idchefe) values(
+"Cama",1,1),
+("Banho",1,1),
+("Moveis",2,2),
+("Utilidades domesticas",2,1),
+("Banho",2,3),
+("Cozinha",3,2),
+("Garagem",3,1),
+("Jardinagem",3,3);
+
+-- Filias
+drop table if exists filiais;
+create table filiais(
+idfilial int not null auto_increment,
+cidadefilial varchar(36) not null);
+
+
+
+
+
+
+
+
+
+
+
+-- EVENTOS droga ;-;
+drop if exists database eventos;
+create database eventos;
+use eventos;
+
+-- participantes
+
+drop table if exists participantes;
+create table if not exists participantes(
+idparticipantes int not null primary key auto_increment,
+nomeparticipante varchar(80) not null,
+telefoneparticipante varchar(14) not null,
+emailparticipante varchar(50) not null,
+membroparticipante enum("S","N") not null);
+
+insert into participantes(nomeparticipante,telefoneparticipante,emailparticipante,membroparticipante) values("Carlos Carlindo de Carla","14997019926","hehuheas@outlook.com","N"),
+("Matheus Zeus da Zilva","14964578123","zeuszika@outlook.com","S"),
+("Marcelo Rogerio Paulo","14235641148","marceloooooo@outlook.com","S"),
+("Leila da Silsa Sansos","14235642315","leilasilsa@outlook.com","N"),
+("Fabiula Fernanda do Carlos","12345167945","fabiulafer@hotmail.com","S"),
+("Elisanda Seila da Silva","13465218794","lissandracongele@yahoo.com","N");
+
+alter table participantes add column sexoparticipante enum("M","F") not null;
+
+update participantes
+set sexoparticipante = "F"
+where idparticipantes = 4 or
+idparticipantes = 5 or
+idparticipantes = 6;
+
+-- eventos
+drop table if exists eventos;
+create table eventos(
+idEvento int not null primary key auto_increment,
+descevento varchar(200) not null,
+obsevento text not null,
+dataevento date not null);
+
+insert into eventos(descevento,obsevento,dataevento) values(
+"Nada, incrivelmente nada e o preco do ingresso nao e grande coisa! So 600 reais!!!","e verdade esse bilhete","2020/02/24"),
+("Tudo, incrivelmente tudo no espaco mais pequeno! menor que o Adrian! e e de graça!","tudo mentira, nao tem nada la","2020/03/14"),
+("Parcialmente, nada de incrivel so tem tudo pela metade","cara ja nao sei dizer se e verdade ou mentira","2019/11/10"),
+("Quase Nada, que lixo, cada vez tem menos o trem","verdade cada vez mais menos","2030/10/12"),
+("Quase tudo, SO TEM QUASE TUDO","depende da sua interpretacao","2040/10/13");
+
+-- participacao
+drop table if exists participacao;
+create table participacao(
+idevento int not null,
+idparticipantes int not null,
+Constraint Fk_Participante foreign key(idparticipantes)
+references participantes(idparticipantes),
+Constraint Fk_Evento foreign key(idevento)
+references eventos(idenvento));
+
+alter table participacao add column certificadoparticipacao enum("S","N") not null;
+
+insert into participacao(idevento,idparticipantes,certificadoparticipacao) values(1,1,"S"),(1,2,"S"),(1,3,"N"),(1,4,"N"),(2,1,"N");
+
+select p.nomeparticipante, e.descevento, a.certificadoparticipacao
+from participantes p, eventos e, participacao a
+where p.idparticipantes = a.idparticipantes and e.idevento = a.idevento;
+
+

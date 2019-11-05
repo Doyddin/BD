@@ -2,47 +2,39 @@
 
 -- avivah
 drop database if exists avivah;
-create database avivah;
+create database if not exists avivah;
+use avivah;
 
 -- Funcionarios nome,sexo,datanasc,endereco,contato,rg,cepeéfi
-drop table if exists funcionarios
-create table funcionarios(
+drop table if exists funcionarios;
+create table if not exists funcionarios(
 idFunc int not null auto_increment primary key,
-idchefe int not null,
 cpfFunc int(10) not null,
 rgFunc int(9) not null,
 nomeFunc varchar(60) not null,
 sexoFunc enum("M","F") not null,
-idcontato int not null,
-datanascFunc date not null,
-idenderecoFunc int not null,
-foreign key(idendereco) references enderecos(idendereco),
-foreign key(idchefe) references chefes(idchefe),
-foreign key(idcontato) references contatos(idcontato));
+datanascFunc date not null);
 
 -- contatos Funcosieoaufha
 drop table if exists contatos;
-create table contatos(
+create table if not exists contatos(
 idcontato int not null auto_increment primary key,
-idFunc int not null,
-idforn int not null,
-idchefe int not null,
+idFunc int,
+idforn int,
 celular int(9) not null,
 telefone int(8),
 telefoneempresa int(8),
 emailpessoal varchar(100) not null,
 emailInst varchar(100) not null,
 foreign key(idFunc) references funcionarios(idFunc),
-foreign key(idchefe) references chefes(idchefe),
 foreign key(idforn) references fornecedores(idforn));
 
 -- fornecedores
 drop table if exists fornecedores;
-create table if not exists fornecedores;
-idempresa int not null primary key,
-empresaFor varchar(35) not null,
+create table if not exists fornecedores(
+idempresa int not null,
+empresaFor int,
 idfor int not null auto_increment primary key,
-idcontato int not null,foreign key(idcontato) references contatos(idcontato),
 numctps int(7) not null,
 cnpjFor int(14) not null,
 cpfFor int(9) not null,
@@ -51,42 +43,42 @@ sexoFor enum("M","F") not null);
 
 -- produtos
 drop table if exists produtos;
-create table if not exists produtos
-(idproduto int not null primary key auto_increment,
-empresafor,foreign key(empresafor) references fornecedores(empresaFor),
+create table if not exists produtos(
+idproduto int not null primary key auto_increment,
+empresafor int,
+foreign key(empresafor) references fornecedores(empresaFor),
 nomeproduto varchar(20) not null,
-corproduto, varchar(20) not null,
-fabricante, varchar (50) not null,
-peso, smallint not null,
+corproduto varchar(20) not null,
+fabricante varchar (50) not null,
+peso smallint not null,
 tamanhoa int not null,
 tamanhol int not null,
 material varchar(120),
-codbarra longint(12),
+codbarra bigint(12),
 preco decimal(5,2) not null,
 composicao varchar(130));
 
 -- enderecos
- create table Enderecos(
+drop table if exists Enderecos;
+create table if not exists Enderecos(
 idendereco int not null primary key auto_increment,
-idfunc int not null,
-idfor int not null,
-idchefe int not null,
+idfunc int,
+idfor int,
 EnderecoFixoFunc varchar(150) not null,
 CEP char(8) not null,
 Complementos varchar(160),
-foregn key(idfunc) references funcionarios(idfunc),
-foreign key(idchefe) references chefes(idchefe),
-foregn key(idfor) references fornecedores(idfor));
+foreign key(idfunc) references funcionarios(idFunc),
+foreign key(idfor) references fornecedores(idfor));
 
 -- setores
 drop table if exists setores;
-create table setores(
+create table if not exists setores(
 idsetor int not null auto_increment primary key,
 nomesetor varchar(30) not null,
 idfilial int not null,
 idchefe int not null);
 
-insert into table setores(nomesetor,idfilial,idchefe) values(
+insert into setores(nomesetor,idfilial,idchefe) values(
 "Cama",1,1),
 ("Banho",1,1),
 ("Moveis",2,2),
@@ -98,24 +90,39 @@ insert into table setores(nomesetor,idfilial,idchefe) values(
 
 -- Filias
 drop table if exists filiais;
-create table filiais(
-idfilial int not null auto_increment,
+create table if not exists filiais(
+idfilial int not null auto_increment primary key,
 cidadefilial varchar(36) not null,
 idchefe int not null,
 foreign key(idchefe) references chefes(idchefe));
 
 -- chefes
-drop table if exists chefes
-create table chefes(
-idchefe int not null primary key,
+drop table if exists chefes;
+create table if not exists chefes(
+idfunc int not null,
+idchefe int not null auto_increment primary key,
 nomechefe varchar(60) not null,
-idcontato int not null,
-idendereco int not null);
+foreign key(idfunc) references funcionarios(idFunc));
 
 
 
-insert into funcionarios(cpfFunc,rgFunc,nomeFunc,sexoFunc,datanascFunc) values (54945637742, 123456789,"Mario Antonio","M","1978/08/26"),
-(83409618493, 987654321, "Teonorio Sergio","M","1969/05/23"),
+insert into funcionarios(cpfFunc,rgFunc,nomeFunc,sexoFunc,datanascFunc) values (549456377,123456789,"Mario Antonio","M","1978/08/26"),
+(8340961849,987654321,"Teonorio Sergio","M","1969/05/23"),
+(3483620953,729428493,"Eurico Fagundes","M","1990/02/08"),
+(8723479234,283934934,"Macedo Alexandre","M","2001/07/30"),
+(2832942184,204248204,"Marcelo e Rogerio","M","1998/04/28"),
+(2498240430,428594594,"Ana Carolina","F","1992/12/27"),
+(4328943200,483489694,"Marcia Leticia","F","1995/05/13"),
+(6736403934,284392859,"Gabriela Vitzner","F","1986/08/11"),
+(3834934958,438934914,"Oliver Jagundes","M","1998/02/07"),
+(7438748347,784834847,"Charles Nascimento","M","1981/09/29"),
+(6575897748,647287325,"Adriano Xavier","M","1976/02/01"),
+(3275983259,329478348,"Katia Fernanda","F","1991/08/05"),
+(2904394399,393493489,"Taric Luan","M","2001/01/08"),
+(2041427483,271948934,"Clever Rodrigo","M","1996/05/11"),
+(9595394359,390430294,"Yasmin Gabriele","F","1998/10/20"),
+(4398284329,237847832,"Marllon Raspante","M","2001/03/27"),
+(8374834848,788277386,"Bruno Araujo","M","1997/06/30");
 
 
 

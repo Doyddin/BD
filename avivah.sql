@@ -177,7 +177,7 @@ insert into contatos(idFunc,idforn,celular,telefone,telefoneempresa,emailpessoal
 ("0","19","956648471","00000000","35442121","morko@outlook.com","moreira.kore@makro.br"),
 ("0","20","968487213","00000000","82892398","kaoo@outlook.com","kao.chin@gmail.com.br"),
 ("0","21","984598545","00000000","34839209","koromanu@gmail.com","koroi.manune23@chuuhc.br"),
-("0","22","936734764","00000000","19843488","hunhein@outlook.com","huneat.bnar1@gmail.com.br"),
+("0","22","936734764","78954123","19843488","hunhein@outlook.com","huneat.bnar1@gmail.com.br"),
 ("0","23","943898395","00000000","34344334","carlocait@gmail.com","carloso.caitano@outlook.com.br"),
 ("0","24","943565623","00000000","84589434","marinso87@gmail.com","mariano.soza23@yahoo.com.br"),
 ("0","25","943734437","00000000","27247425","matildefeli@gmail.com","matilde.feliciano@gamei.com.br"),
@@ -185,84 +185,45 @@ insert into contatos(idFunc,idforn,celular,telefone,telefoneempresa,emailpessoal
 ("0","27","926746743","00000000","28493874","huan.m@outlook.com","huan.munkei@hacter.com.br"),
 ("0","28","923742764","00000000","14818484","elmo.kennedy@oconnor.com","elmo.kennedy@gmail.com.br"),
 ("0","29","947363746","00000000","23743784","scott.arc@sbs.com","scott.arceneaux@com.com"),
-("0","30","938743466","00000000","72837287","malcolmgraves@12gauge.com","malcom.graves@pirata.com"),
+("0","30","938743466","69962552","72837287","malcolmgraves@12gauge.com","malcom.graves@pirata.com"),
 ("0","31","926743674","00000000","72343984","gabriel.silva@gmail.com","gabriel.silve38@tecnico.com"),
 ("0","32","926326673","00000000","68283983","silvana.schultz@gawer.com","silvana.schultz245@gamega.com"),
 ("0","33","934762445","00000000","24243432","joano.sanosi@werager.com","joano.sanos242@hotmial.com");
 
-
-
-
-
-
-
-
-
-
-
-
-
--- EVENTOS droga ;-;
-drop database if exists eventos;
-create database eventos;
-use eventos;
-
--- participantes
-
-drop table if exists participantes;
-create table if not exists participantes(
-idparticipantes int not null primary key auto_increment,
-nomeparticipante varchar(80) not null,
-telefoneparticipante varchar(14) not null,
-emailparticipante varchar(50) not null,
-membroparticipante enum("S","N") not null);
-
-insert into participantes(nomeparticipante,telefoneparticipante,emailparticipante,membroparticipante) values("Carlos Carlindo de Carla","14997019926","hehuheas@outlook.com","N"),
-("Matheus Zeus da Zilva","14964578123","zeuszika@outlook.com","S"),
-("Marcelo Rogerio Paulo","14235641148","marceloooooo@outlook.com","S"),
-("Leila da Silsa Sansos","14235642315","leilasilsa@outlook.com","N"),
-("Fabiula Fernanda do Carlos","12345167945","fabiulafer@hotmail.com","S"),
-("Elisanda Seila da Silva","13465218794","lissandracongele@yahoo.com","N");
-
-alter table participantes add column sexoparticipante enum("M","F") not null;
-
-update participantes
-set sexoparticipante = "F"
-where idparticipantes = 4 or
-idparticipantes = 5 or
-idparticipantes = 6;
-
--- eventos
-drop table if exists eventos;
-create table eventos(
-idEvento int not null primary key auto_increment,
-descevento varchar(200) not null,
-obsevento text not null,
-dataevento date not null);
-
-insert into eventos(descevento,obsevento,dataevento) values(
-"Nada, incrivelmente nada e o preco do ingresso nao e grande coisa! So 600 reais!!!","e verdade esse bilhete","2020/02/24"),
-("Tudo, incrivelmente tudo no espaco mais pequeno! menor que o Adrian! e e de graça!","tudo mentira, nao tem nada la","2020/03/14"),
-("Parcialmente, nada de incrivel so tem tudo pela metade","cara ja nao sei dizer se e verdade ou mentira","2019/11/10"),
-("Quase Nada, que lixo, cada vez tem menos o trem","verdade cada vez mais menos","2030/10/12"),
-("Quase tudo, SO TEM QUASE TUDO","depende da sua interpretacao","2040/10/13");
-
--- participacao
-drop table if exists participacao;
-create table participacao(
-idevento int not null,
-idparticipantes int not null,
-Constraint Fk_Participante foreign key(idparticipantes)
-references participantes(idparticipantes),
-Constraint Fk_Evento foreign key(idevento)
-references eventos(idenvento));
-
-alter table participacao add column certificadoparticipacao enum("S","N") not null;
-
-insert into participacao(idevento,idparticipantes,certificadoparticipacao) values(1,1,"S"),(1,2,"S"),(1,3,"N"),(1,4,"N"),(2,1,"N");
-
-select p.nomeparticipante, e.descevento, a.certificadoparticipacao
-from participantes p, eventos e, participacao a
-where p.idparticipantes = a.idparticipantes and e.idevento = a.idevento;
-
+insert into enderecos(idFunc,idfor,EnderecoFixoFunc,CEP,Complementos) values
+("1","0","Rua Das Limoeiras, Bairro Pe de alho, 209, Nova Carambola","86542934"," "),
+("2","0","Rua Pe De Jaca, Bairro, Bairro da Cascata, 8143, Hidropolis","14384323"," "),
+("3","0","Rua Solimoes, Bairro Velha Esperança, 432, Adriania","83249141"," "),
+("4","0","Rua Sona Muda, Bairro de Demacia, 82487, Demacia","89430134"," "),
+("5","0","Rua Lebron James, Bairro do Sul, 234, Agua Viva","83492014"," "),
+("6","0","Rua Heder, Bairro Marcelo, 202, Gritas","83409340"," "),
+("7","0","Rua da Tartaruga, Bairro da Fenix, 67, Ursopolis","43902031"," "),
+("8","0","Rua Fabio Izakugaya, Bairro Padre Bento, 824, Itaiaia","73930193"," "),
+("9","0","Rua Tinoco, Bairro da Praia, 734, Barreira","94020233"," "),
+("10","0","Rua Colmeia, Bairro da Favo de Mel, 384, Ferroadas","28473284"," "),
+("11","0","Rua Branco, Bairro Gabriel Issais, 9, Matue","23847238"," "),
+("12","0","Rua Farinha, Bairro Rogerio, 4924, Passos de Monte Carmo","44442943"," "),
+("13","0","Rua Ruti, Bairro Centro, 2642, Itaquare","59384892"," "),
+("14","0","Rua das Mariposas, Bairro Fabritzio Alexios, 327, Itanhanhem","88746472"," "),
+("15","0","Rua Josiane, Bairro dos Bolada, 19043, Sao Paulo","19384231"," "),
+("16","0","Rua Tripie Vermelho, Bairro do Alemao, 293, Assis","93913841"," "),
+("17","0","Rua do Mercadao, Bairro Nova Tereza, 27442, Inguarape","28326913"," "),
+("18","0","Rua Santa Ines, Bairro Vila Velha, 1873, Sao Caetano","69820923"," "),
+("0","19","Rua Boemia, Bairro Gragas, 8234, Vilinia","93450203"," "),
+("0","20","Rua Marala, Bairro Pacu, 4983, Getulina","17432731"," "),
+("0","21","Rua da Lua, Bairro Osmar, 26, Baia de Galeoes","92898473"," "),
+("0","22","Rua Gabriels, Bairro Herculino, 982, Taquararia","82489231"," "),
+("0","23","Rua Riaskd, Bairro Estonia, 2948, Jorfjornn","84934263"," "),
+("0","24","Rua Illaoi, Bairro da Sacerdotisa, 8943, Craquem","84384273"," "),
+("0","25","Rua Argentina, Bairro Uchoa, 281, Jaminopolis","98330022"," "),
+("0","26","Rua Heder, Bairro Baguncado, 823, Tula Luana","28482093"," "),
+("0","27","Rua Hugo, Bairro Mariana, 2893, Igopolis","82381021"," "),
+("0","28","Rua Rafael, Bairro Michelangelo, 29, Donatelo","84820011"," "),
+("0","29","Rua Espaique, Bairro Levinho, 101, Rica","10102928"," "),
+("0","28","Rua Olios, Bairro Kaique, 2833, Aleque","22017442"," "),
+("0","29","Rua Camiile, Bairro Piltover, 2831, Progresso","92930131"," "),
+("0","30","Rua Otaco, Bairro Liberdade, 203, Sao Paulo","89321010"," "),
+("0","31","Rua dos Apaixonados, Bairro Marlinho, 923, Brunopolis","83191011"," "),
+("0","32","Rua Carangot, Bairro Cachoeiras, 102, Caranguejos","12120101"," "),
+("0","33","Rua Pao de Queijo, Bairro Com Fritas, 293, Gepencio","83801012"," ");
 
